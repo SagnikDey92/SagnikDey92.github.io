@@ -1,9 +1,10 @@
+
 <!-- ---
 title: gsoc19_Final_Eval
 --- -->
 # Google Summer of Code 2019: Boost.Real
 ## Introduction
-I was involved in getting the library Boost.Real to review ready state. It is a C++ library that tries to get rid of precision issues caused by traditional floating point arithmetic by using range arithmetic. The library was started in GSoC'18 by Laouen Belloli,  and me along with Kimberly Swanson worked on it this year.
+I was involved in getting the library Boost.Real to review ready state. It is a C++ library that tries to get rid of untracked errors caused by traditional floating point arithmetic by using range arithmetic. The library was started in GSoC'18 by Laouen Belloli,  and me along with Kimberly Swanson worked on it this year.
 
 ## Commit Summary with Links (trivial commits omitted)
 [Minor typo corrections. Commited before the start of GSoC](https://github.com/BoostGSoC19/Real/commit/225e08025709eaef8da81a5118d1148b0fcbb312)
@@ -38,11 +39,14 @@ The base change task ended up involving a lot more changes than I had originally
 
 As for the Karatsuba multiplication, I got it working when in base 10 and sent a PR but I haven't been able to get it to work in the new base yet and thus it's not present in the code currently.
 
+## Base Change
+This task involved changing the number base used internally from decimal (base 10) to base ```INT_MAX```. This is because, originally, the library was using a ```vector<int>``` to store the real numbers but the base was 10. So, the capacity of integers was being wasted since each digit is from ```0 - 10``` but the integer variable can store upto ```INT_MAX-1```. This problem can been eliminated by changing the number base used internally from 10 to ```INT_MAX```. Howeve, it was decided to change the ```vector<int>``` to ```vector<T>``` where ```T``` is a template parameter. Thus the internal base actually needs to be the max capacity of the parameter ```T``` for optimal space utilisation.
+
 ## Additional tasks due to base change
 
-I had originally thought that the only things to be done in base_change were to write some helper functions to change the base to and from ```INT_MAX```. The base had to be changed since in base 10, something like 123 stored  as a vector takes three integers storing 1, 2 and 3. This wastes a lot of memory. Thus, the base has been changed to ```INT_MAX``` to utilise space optimally.
+I had originally thought that the only things to be done in base_change were to write some helper functions to change the base to and from ```INT_MAX```. The base had to be changed since, in base 10, something like 123 stored as a vector takes three integers storing 1, 2 and 3. This wastes a lot of memory. Thus, the base has been changed to ```INT_MAX``` to utilise space optimally.
 
-First of all, the mentors suggested adding templating to the entire library to use a custom data type for storing the digits and not just int. This required me to add templating to the entire library and also this kept causing issues when trying to merge since at the time, Kimberly too was working on a major refactor.
+First of all, the mentors suggested adding templating to the entire library to use a custom data type for storing the digits and not just int. This required me to add templating to the entire library and also this kept causing issues when trying to merge since, at the time, Kimberly too was working on a major refactor.
 
 Next, there was an issue of overflowing in intermediate calculations with the new base which had not crossed my mind while making the proposal due to which all of the mathematical operations had to be changed. Of course, I'm not talking about just the vector operations needing to be modified to work in the new base. For example: 
 
@@ -114,12 +118,15 @@ T mult_div(T a, T b, T c) {
 
 Several other changes also needed to be made to functions here and there to remove overflow completely from the library.
 
-**NOTE**: *I haven't able to make the base ```INT_MAX``` while taking care of overflows and was only able to take it up to ```INT_MAX/2```.*
+**NOTE**: *I haven't able to make the base ```INT_MAX```  and was only able to take it up to ```INT_MAX/2```. This is because I'm still getting integer overflows during the multiplication operation. This needs to be fixed as half the memory of an integer is wasted each time as the digits in base ```INT_MAX/2``` can only go uptil ```INT_MAX/2 - 1```.* 
 
 ### Redesigning the test cases
-Another major task that I had to do along with the base change that I wasn't expecting nor looking forward to, to be honest, was essentially having to rewrite all the test cases to work in the new base. For this, I had to update the catch2 version we were using as well since the mentors wanted the test cases to be type parameterized to test for templating issues in all data types. This wasn't possible in the previous version of catch we were using.
+Another major task that I had to do along with the base change that I wasn't expecting nor looking forward to, to be honest, was essentially having to rewrite all the test cases to work in the new base. For this, I had to update the catch2 version we were using as well since the mentors wanted the test cases to be type parameterized to test for templating issues in all data types. This wasn't possible in the previous version of catch we were using. Now, the base used internally is dependent on a template parameter which determines the data type used for storing digits of the Boost.Real number. And the new test cases run all the tests over three values of this template parameter, namely: ```int```, ```long``` and ```long  long```.
+
 ## Implement User Defined Literal method for declaring objects of type real.
 
+This task basically is to add functionality to declare Boost.Real type variable using User Defined Literals. This enables us to declare reals like this:
+```auto a = 123_r;	//This initialises a by a Boost.Real variable with value 123.```
 This ended up being a really trivial task since all I had to do was add the lines:
 ```
 //User Defined Literals
@@ -138,7 +145,7 @@ inline auto operator "" _r(const char* x, size_t len) {
 ```
 
 ## Adding Karatsuba Multiplication
-As the title suggests, this task involved me adding Karatsuba Multiplication feature to the library. I was able to do this in the base 10 case. After base change however, I have been unsuccessful in getting it to work. Though, when testing in the base 10 case, the karatsuba does seem to take more time than the regular long multiplication, so some benchmarking needs to be done to check in which cases this is actually useful. Of course, the choice of whether to use it or not will be left to the user via setting a global variable.
+As the title suggests, this task involved me adding Karatsuba Multiplication feature to the library. This is a divide and conquer approach to vector multiplication that has a theoretical time complexity better than the naïve long vector multiplication algorithm implemented earlier. I was able to do this in the base 10 case. After base change however, I have been unsuccessful in getting it to work. Though, when testing in the base 10 case, the karatsuba does seem to take more time than the regular long multiplication, so some benchmarking needs to be done to check in which cases this is actually useful. Of course, the choice of whether to use it or not will be left to the user via setting a global variable.
 
 ## Bugs in Division
 I had asked Kimberly to finish the Division code a bit ahead of schedule since it was needed for the base change. The reason is that after base change, something like 1.23 is stored internally as an operation number as ```123/100```. The reason for that is that finitely representable numbers in base 10 may not be finitely representable in other bases.
@@ -147,7 +154,8 @@ This led to a bit rushed development of the division code and led to several bug
 
 Even now I feel there is much room for improvement in the division algorithm and I fixed a major bug quite recently. The fix itself was just one line but took me a really long time to find. With that fixed, the library should finally be ready for review.
 ## Adding regex
-This ended up being a futile effort. I had put in some time trying to use regex to clean up the code for string parsing. This also got rid of several loopholes in illegal string exception throwing. However, it was finally decided that regex is too unpredictable, running differently depending on the environment and even the Travis build was failing due to the regex for MacOS. Thus this idea was finally scrapped, and we have reverted to doing the string parsing manually without using regex.
+I thought using regular expressions library for pattern matching would clean up some of the code so I set about this task which was not in my proposal.
+This, however,  ended up being a futile effort. I had put in some time trying to use regex to clean up the code for string parsing. This also got rid of several loopholes in illegal string exception throwing. However, it was finally decided that regex is too unpredictable, running differently depending on the environment and even the Travis build was failing due to the regex for MacOS. Thus this idea was finally scrapped, and we have reverted to doing the string parsing manually without using regex.
 
 ## Areas for Future improvement
 ### Base conversions
@@ -155,6 +163,7 @@ Since I wanted just to get the base change done to see if it works, as a base im
 
 ### More operations
 Operations like exponent, square root etc. should be added to the library at some point. 
+
 ### Perfect the base change
 As I mentioned above, the base being used internally currently is ```INT_MAX/2``` as I wasn't able to get it working for base ```INT_MAX```. I'll have to look into it and perfect it later.
 
