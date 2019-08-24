@@ -26,7 +26,7 @@ I was involved in getting the library Boost.Real to review ready state. It is a 
 
 [Updating catch2 version and adding template parameterization to test cases](https://github.com/BoostGSoC19/Real/commit/d442d5211cb061c80bd1251d38a1fa76d0220459)
 
-**The complete list of commits can be found at this link**:
+**The complete list of merged commits can be found at this link**:
 [https://github.com/BoostGSoC19/Real/commits?author=SagnikDey92](https://github.com/BoostGSoC19/Real/commits?author=SagnikDey92)
 ### Unmerged closed PRs
 [https://github.com/BoostGSoC19/Real/pull/6](https://github.com/BoostGSoC19/Real/pull/6)
