@@ -7,6 +7,7 @@ title: gsoc19_Final_Eval
 I was involved in getting the library Boost.Real to review ready state. It is a C++ library that tries to get rid of untracked errors caused by traditional floating point arithmetic by using range arithmetic. The library was started in GSoC'18 by Laouen Belloli,  and me along with Kimberly Swanson worked on it this year.
 
 ## Commit Summary with Links (trivial commits omitted)
+### Merged commits
 [Minor typo corrections. Commited before the start of GSoC](https://github.com/BoostGSoC19/Real/commit/225e08025709eaef8da81a5118d1148b0fcbb312)
 
 [Made some changes to enforce user declaration of max_precision variable](https://github.com/BoostGSoC19/Real/commit/095e3e97f97d9f0f6b6df3f863e638e461a03fb6)
@@ -27,6 +28,16 @@ I was involved in getting the library Boost.Real to review ready state. It is a 
 
 **The complete list of commits can be found at this link**:
 [https://github.com/BoostGSoC19/Real/commits?author=SagnikDey92](https://github.com/BoostGSoC19/Real/commits?author=SagnikDey92)
+### Unmerged closed PRs
+[https://github.com/BoostGSoC19/Real/pull/6](https://github.com/BoostGSoC19/Real/pull/6)
+[https://github.com/BoostGSoC19/Real/pull/18](https://github.com/BoostGSoC19/Real/pull/18)
+[https://github.com/BoostGSoC19/Real/pull/19](https://github.com/BoostGSoC19/Real/pull/19)
+[https://github.com/BoostGSoC19/Real/pull/23](https://github.com/BoostGSoC19/Real/pull/23)
+[https://github.com/BoostGSoC19/Real/pull/24](https://github.com/BoostGSoC19/Real/pull/24)
+[https://github.com/BoostGSoC19/Real/pull/26](https://github.com/BoostGSoC19/Real/pull/26)
+### PRs remaining to be merged
+[Final bug fix for the division operator.](https://github.com/BoostGSoC19/Real/pull/38)
+
 ## My Tasks
 This varied a bit from my proposal since I found out I was to be collaborating with another GSoC student, Kimberly Swanson. We communicated through group emails including us and our mentors, Damian Vicino and Laouen Belloli. We split up the tasks. Here are the ones that I was assigned:
 
@@ -35,12 +46,12 @@ This varied a bit from my proposal since I found out I was to be collaborating w
 * Redesign test cases.
 * Add Karatsuba multiplication (ongoing)
 
-The base change task ended up involving a lot more changes than I had originally imagined and thus took up most of my time. This is primarily because it required a major refactor to add templating. Also, while Kimberly had made the division algorithm, she had to rush it since it was a dependency for the base change task. As such, it was initially quite buggy and I contributed towards several bug fixes in it.
+The base change task ended up involving a lot more changes than I had originally anticipated and thus took up most of my time. This is primarily because it required a major refactor to add templating. Also, while Kimberly had made the division algorithm, she had to rush it since it was a dependency for the base change task. As such, it was initially quite buggy and I contributed towards several bug fixes in it.
 
 As for the Karatsuba multiplication, I got it working when in base 10 and sent a PR but I haven't been able to get it to work in the new base yet and thus it's not present in the code currently.
 
 ## Base Change
-This task involved changing the number base used internally from decimal (base 10) to base ```INT_MAX```. This is because, originally, the library was using a ```vector<int>``` to store the real numbers but the base was 10. So, the capacity of integers was being wasted since each digit is from ```0 - 10``` but the integer variable can store upto ```INT_MAX-1```. This problem can been eliminated by changing the number base used internally from 10 to ```INT_MAX```. Howeve, it was decided to change the ```vector<int>``` to ```vector<T>``` where ```T``` is a template parameter. Thus the internal base actually needs to be the max capacity of the parameter ```T``` for optimal space utilisation.
+This task involved changing the number base used internally from decimal (base 10) to base ```INT_MAX```. This is because, originally, the library was using a ```vector<int>``` to store the real numbers but the base was 10. So, the capacity of integers was being wasted since each digit is from ```0 - 10``` but the integer variable can store upto ```INT_MAX-1```. This problem can been eliminated by changing the number base used internally from 10 to ```INT_MAX```. However, it was decided to change the ```vector<int>``` to ```vector<T>``` where ```T``` is a template parameter. Thus the internal base actually needs to be the max capacity of the parameter ```T``` for optimal space utilisation.
 
 ## Additional tasks due to base change
 
@@ -118,7 +129,7 @@ T mult_div(T a, T b, T c) {
 
 Several other changes also needed to be made to functions here and there to remove overflow completely from the library.
 
-**NOTE**: *I haven't able to make the base ```INT_MAX```  and was only able to take it up to ```INT_MAX/2```. This is because I'm still getting integer overflows during the multiplication operation. This needs to be fixed as half the memory of an integer is wasted each time as the digits in base ```INT_MAX/2``` can only go uptil ```INT_MAX/2 - 1```.* 
+**NOTE**: *I haven't able to make the base ```INT_MAX```  and was only able to take it up to ```INT_MAX/2```. This is because I'm still getting integer overflows during the multiplication operation. This needs to be fixed as one bit of memory is wasted per integer digit as the digits in base ```INT_MAX/2``` can only go up to ```INT_MAX/2 - 1```.* 
 
 ### Redesigning the test cases
 Another major task that I had to do along with the base change that I wasn't expecting nor looking forward to, to be honest, was essentially having to rewrite all the test cases to work in the new base. For this, I had to update the catch2 version we were using as well since the mentors wanted the test cases to be type parameterized to test for templating issues in all data types. This wasn't possible in the previous version of catch we were using. Now, the base used internally is dependent on a template parameter which determines the data type used for storing digits of the Boost.Real number. And the new test cases run all the tests over three values of this template parameter, namely: ```int```, ```long``` and ```long  long```.
