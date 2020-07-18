@@ -7,6 +7,7 @@
 * [Parallel, Concurrent, and Distributed Programming in Java Specialization](https://www.coursera.org/account/accomplishments/specialization/certificate/JMTH3ZKAY6AE)
 * [Improving Deep Neural Networks: Hyperparameter tuning, Regularization and Optimization](https://www.coursera.org/account/accomplishments/certificate/CGUGDJNHKRBS)
 * [Sequence Models](https://www.coursera.org/account/accomplishments/certificate/7RFJQNSSMGQS)
+* [I/O-efficient algorithms](https://www.coursera.org/account/accomplishments/certificate/GKQR8ZHBKGXT)
 
 ## Sketches
 * [Super Saiyan 3](/images/final.jpeg)
