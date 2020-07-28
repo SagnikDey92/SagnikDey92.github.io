@@ -8,6 +8,7 @@
 * [Improving Deep Neural Networks: Hyperparameter tuning, Regularization and Optimization](https://www.coursera.org/account/accomplishments/certificate/CGUGDJNHKRBS)
 * [Sequence Models](https://www.coursera.org/account/accomplishments/certificate/7RFJQNSSMGQS)
 * [I/O-efficient algorithms](https://www.coursera.org/account/accomplishments/certificate/GKQR8ZHBKGXT)
+* [Structuring Machine Learning Projects](https://www.coursera.org/account/accomplishments/certificate/YAG4H4ZH58GG)
 
 ## Sketches
 * [Super Saiyan 3](/images/final.jpeg)
