@@ -9,6 +9,7 @@
 * [Sequence Models](https://www.coursera.org/account/accomplishments/certificate/7RFJQNSSMGQS)
 * [I/O-efficient algorithms](https://www.coursera.org/account/accomplishments/certificate/GKQR8ZHBKGXT)
 * [Structuring Machine Learning Projects](https://www.coursera.org/account/accomplishments/certificate/YAG4H4ZH58GG)
+* [Convolutional Neural Networks](https://www.coursera.org/account/accomplishments/certificate/3B6WPKFL39DU)
 
 ## Sketches
 * [Super Saiyan 3](/images/final.jpeg)
