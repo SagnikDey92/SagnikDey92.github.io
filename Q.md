@@ -10,6 +10,8 @@
 * [I/O-efficient algorithms](https://www.coursera.org/account/accomplishments/certificate/GKQR8ZHBKGXT)
 * [Structuring Machine Learning Projects](https://www.coursera.org/account/accomplishments/certificate/YAG4H4ZH58GG)
 * [Convolutional Neural Networks](https://www.coursera.org/account/accomplishments/certificate/3B6WPKFL39DU)
+* [Neural Networks and Deep Learning](https://www.coursera.org/account/accomplishments/certificate/95TLMCUVDLB7)
+* [Deep Learning Specialization](https://www.coursera.org/account/accomplishments/specialization/certificate/NARGM3UVMB2P)
 
 ## Sketches
 * [Super Saiyan 3](/images/final.jpeg)
