@@ -1,7 +1,7 @@
 # Sagnik Dey
 ## About
 I am a third year undergraduate pursuing a major in **Mathematics and Scientific Computing** at the **Indian Institute of Technology, Kanpur**.
-* [CV](Latest%20Resume.pdf)
+* [CV](170605_SagnikDey.pdf)
 * [Gradesheet](Latest%20Gradesheet%20Scan.pdf)
 
 ## Posts
