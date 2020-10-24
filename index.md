@@ -2,7 +2,7 @@
 ## About
 I am a third year undergraduate pursuing a major in **Mathematics and Scientific Computing** at the **Indian Institute of Technology, Kanpur**.
 * [CV](170605_SagnikDey.pdf)
-* [Gradesheet](Latest%20Gradesheet%20Scan.pdf)
+* [Gradesheet](7thsemesterGradesheet.pdf)
 
 ## Posts
 * [Google Summer of Code 2019 Final Evaluation](GSoC)
