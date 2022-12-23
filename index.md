@@ -1,9 +1,10 @@
 # Sagnik Dey
 ## About
-I am a third year undergraduate pursuing a major in **Mathematics and Scientific Computing** at the **Indian Institute of Technology, Kanpur**. I am interested in the field of **High Performance Computing**. 
+I am a first year graduate student pursuing a major in **Computer Science** at **Purdue University, West Lafayette**. I am interested in the field of **High Performance Computing** and **Systems Software Engineering**. I graduated from my Bachelors in **Mathematics and Scientific Computing** at the **Indian Institute of Technology, Kanpur** with distinction in Summer '21.
 * [CV](CV.pdf)
-* [Gradesheet](Gradesheet.pdf)
+* [Undergraduate Gradesheet](Gradesheet.pdf)
 
 ## Posts
 * [Google Summer of Code 2019 Final Evaluation](GSoC)
-* [Quarantine Work](Q)
+* [Online courses](Q1)
+* [Sketches](Q2)
